@@ -51,6 +51,10 @@ a{ color:inherit; }
   padding:.6rem 1.15rem; border-radius:.5rem; transition:background .2s ease;
 }
 .nav-cta:hover{ background:var(--blue-2); }
+.nav-cta-ghost{
+  background:transparent; color:#fff; border:1px solid var(--on-navy-line); margin-right:.75rem;
+}
+.nav-cta-ghost:hover{ background:rgba(255,255,255,.08); border-color:var(--blue-2); }
 .nav-toggle{ display:none; }
 
 /* HERO */

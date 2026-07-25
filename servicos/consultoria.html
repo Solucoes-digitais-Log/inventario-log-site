@@ -204,11 +204,19 @@
     font-family:var(--mono); font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:rgba(255,255,255,.6); }
   .brandmark img{ width:18px; height:18px; border-radius:5px; }
 
+  .back-home{ position:fixed; top:clamp(1.2rem,3vw,2rem); left:clamp(1.25rem,3vw,1.75rem); z-index:31;
+    display:flex; align-items:center; gap:.4rem; text-decoration:none;
+    font-family:var(--mono); font-size:.72rem; letter-spacing:.05em; color:rgba(255,255,255,.75);
+    border:1px solid rgba(255,255,255,.22); background:rgba(11,19,48,.5); backdrop-filter:blur(8px);
+    padding:.45rem .8rem; border-radius:999px; transition:background .25s ease, color .25s ease; }
+  .back-home:hover{ background:rgba(255,255,255,.15); color:#fff; }
+
   @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } }
 </style>
 </head>
 <body>
 
+<a class="back-home" href="../index.html">← Voltar para o site</a>
 <div class="deck">
   <div class="slides" id="slides">
 
