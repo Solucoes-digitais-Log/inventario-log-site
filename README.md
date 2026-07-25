@@ -9,6 +9,7 @@ index.html                 → landing page (home)
 assets/css/site.css        → estilos compartilhados (cores, tipografia, componentes)
 servicos/inventario-log.html → apresentação completa do app (deck standalone)
 servicos/consultoria.html    → apresentação completa da consultoria (deck standalone)
+servicos/gerador-etiquetas.html → ferramenta standalone de emissão de etiquetas com código de barras
 ```
 
 A paleta e as fontes (Sora, Inter, IBM Plex Mono) foram extraídas das duas apresentações originais para manter a mesma identidade visual em todo o site.
