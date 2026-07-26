@@ -8,6 +8,7 @@ Site institucional em HTML/CSS puro (sem build, sem framework), pensado para ir 
 index.html                 → landing page (home)
 assets/css/site.css        → estilos compartilhados (cores, tipografia, componentes)
 servicos/inventario-log.html → apresentação completa do app (deck standalone)
+servicos/plataforma-web.html → apresentação da plataforma web (deck standalone)
 servicos/consultoria.html    → apresentação completa da consultoria (deck standalone)
 servicos/gerador-etiquetas.html → ferramenta standalone de emissão de etiquetas com código de barras
 ```

@@ -67,15 +67,10 @@ a{ color:inherit; }
   font-family:var(--mono); font-size:.75rem; letter-spacing:.16em; text-transform:uppercase;
   color:var(--blue-2);
 }
-.hero h1{
-  font-family:var(--display); font-weight:700; line-height:1.05;
-  font-size:clamp(2.2rem,5.5vw,3.75rem); max-width:20ch; margin-top:.75rem;
-}
-.hero p{
-  font-size:clamp(1rem,1.4vw,1.2rem); max-width:52ch; margin-top:1.25rem;
-  color:var(--on-navy-muted);
-}
-.hero-actions{ display:flex; gap:1rem; flex-wrap:wrap; margin-top:2.25rem; }
+.hero-cover{ display:flex; flex-direction:column; align-items:center; text-align:center; }
+.hero-cover .eyebrow{ margin-bottom:.75rem; }
+.hero-image{ width:100%; max-width:1080px; height:auto; border-radius:1rem; box-shadow:0 40px 100px -30px rgba(0,0,0,.55); }
+.hero-actions{ display:flex; gap:1rem; flex-wrap:wrap; margin-top:2.25rem; justify-content:center; }
 .btn{
   display:inline-flex; align-items:center; gap:.5rem; text-decoration:none;
   font-weight:600; font-size:.95rem; padding:.85rem 1.5rem; border-radius:.6rem;
@@ -118,6 +113,9 @@ section{ padding:clamp(3.5rem,8vw,6rem) 0; }
 .service-card p{ color:var(--muted); font-size:.96rem; flex:1; }
 .service-link{ font-weight:600; font-size:.9rem; color:var(--blue); display:inline-flex; align-items:center; gap:.4rem; }
 .service-card:hover .service-link{ color:var(--blue-2); }
+.tool-note{ margin-top:clamp(1.5rem,3vw,2.25rem); display:flex; align-items:center; gap:.6rem; flex-wrap:wrap; font-size:.9rem; color:var(--muted); }
+.tool-note a{ color:var(--blue); font-weight:600; text-decoration:none; }
+.tool-note a:hover{ color:var(--blue-2); }
 
 /* ABOUT */
 .about{ background:var(--navy); color:#fff; }
@@ -142,7 +140,6 @@ section{ padding:clamp(3.5rem,8vw,6rem) 0; }
 .contact-box p{ color:var(--muted); margin-top:.6rem; max-width:42ch; }
 .contact-links{ display:flex; flex-direction:column; gap:.6rem; font-size:.95rem; }
 .contact-links a{ text-decoration:none; color:var(--blue); font-weight:600; }
-.todo-note{ font-family:var(--mono); font-size:.72rem; color:var(--red); margin-top:.5rem; }
 
 /* FOOTER */
 footer{ background:var(--navy); color:var(--on-navy-muted); padding:2.5rem 0; font-size:.85rem; }

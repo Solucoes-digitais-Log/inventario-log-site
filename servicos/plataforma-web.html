@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Plataforma Web · Inventário.Log — Soluções Digitais.Log</title>
+<meta name="description" content="A central web que fecha o seu inventário: reúne as contagens da equipe, aponta divergências automaticamente e entrega o resultado em relatórios prontos.">
+<link rel="canonical" href="https://solucoes-digitais-log.github.io/inventario-log-site/servicos/plataforma-web.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Soluções Digitais.Log">
+<meta property="og:title" content="Plataforma Web · Inventário.Log — Soluções Digitais.Log">
+<meta property="og:description" content="A central web que fecha o seu inventário: reúne as contagens da equipe, aponta divergências automaticamente e entrega o resultado em relatórios prontos.">
+<meta property="og:url" content="https://solucoes-digitais-log.github.io/inventario-log-site/servicos/plataforma-web.html">
+<meta property="og:locale" content="pt_BR">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#090D15;
+    --bg-2:#0B111B;
+    --card:#131A26;
+    --card-2:#0F151F;
+    --border:rgba(255,255,255,.07);
+    --border-strong:rgba(255,255,255,.13);
+    --blue:#2563EB;
+    --blue-bright:#3B82F6;
+    --blue-soft:rgba(37,99,235,.14);
+    --green:#22C55E;
+    --green-soft:rgba(34,197,94,.14);
+    --orange:#F97316;
+    --orange-soft:rgba(249,115,22,.14);
+    --text:#F1F5F9;
+    --muted:#9AA6B8;
+    --muted-2:#64748B;
+    --display:'Inter',system-ui,-apple-system,sans-serif;
+    --body:'Inter',system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:
+      radial-gradient(1100px 600px at 78% -8%, rgba(37,99,235,.16), transparent 60%),
+      radial-gradient(900px 500px at 8% 108%, rgba(37,99,235,.08), transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:var(--body);
+    -webkit-font-smoothing:antialiased;
+    display:flex;align-items:center;justify-content:center;
+    min-height:100vh;overflow:hidden;
+  }
+
+  /* ---- deck frame ---- */
+  .deck{
+    position:relative;
+    width:min(96vw, 1280px);
+    aspect-ratio:16/9;
+    max-height:94vh;
+    background:linear-gradient(180deg, var(--bg-2), #080C13);
+    border:1px solid var(--border);
+    border-radius:20px;
+    box-shadow:0 40px 120px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.03);
+    overflow:hidden;
+  }
+
+  /* header lockup */
+  .top{
+    position:absolute;top:0;left:0;right:0;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:clamp(14px,2.2vw,26px) clamp(20px,3vw,44px);
+    z-index:5;
+  }
+  .brand{display:flex;align-items:center;gap:11px}
+  .logo{
+    width:clamp(28px,2.6vw,36px);height:clamp(28px,2.6vw,36px);
+    border-radius:9px;display:grid;place-items:center;
+    background:linear-gradient(160deg,var(--blue-bright),var(--blue));
+    box-shadow:0 6px 20px rgba(37,99,235,.45);
+  }
+  .logo svg{width:58%;height:58%}
+  .brand-name{font-family:var(--display);font-weight:600;font-size:clamp(14px,1.35vw,18px);letter-spacing:-.2px}
+  .brand-name .dot{color:var(--blue-bright)}
+  .maker{display:flex;align-items:center;gap:9px;color:var(--muted)}
+  .maker .sd{
+    width:clamp(26px,2.3vw,32px);height:clamp(26px,2.3vw,32px);border-radius:50%;
+    background:linear-gradient(160deg,#1E3A8A,#2563EB);
+    display:grid;place-items:center;font-size:11px;font-weight:700;color:#dbeafe;
+    border:1px solid rgba(255,255,255,.12);
+  }
+  .maker span{font-size:clamp(12px,1.1vw,15px);font-weight:500}
+
+  /* slide */
+  .slide{
+    position:absolute;inset:0;
+    padding:clamp(66px,8.5vw,120px) clamp(24px,4vw,64px) clamp(46px,5vw,64px);
+    display:flex;flex-direction:column;justify-content:center;
+    opacity:0;visibility:hidden;transform:translateY(14px);
+    transition:opacity .5s ease, transform .5s ease, visibility .5s;
+  }
+  .slide.active{opacity:1;visibility:visible;transform:none}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
+    font-size:clamp(11px,1vw,13px);font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--blue-bright);margin-bottom:clamp(12px,1.4vw,18px);
+  }
+  .eyebrow::before{content:"";width:22px;height:1px;background:var(--blue-bright);opacity:.7}
+  h1{font-family:var(--display);font-weight:800;line-height:1.02;letter-spacing:-.03em}
+  h2{font-family:var(--display);font-weight:700;line-height:1.06;letter-spacing:-.02em;
+     font-size:clamp(26px,3.6vw,50px)}
+  .lead{color:var(--muted);font-size:clamp(14px,1.45vw,19px);line-height:1.55;max-width:60ch;margin-top:clamp(12px,1.4vw,18px)}
+  .txt{color:var(--muted);font-size:clamp(13px,1.15vw,16px);line-height:1.5}
+
+  /* ---- cover ---- */
+  .cover{justify-content:center}
+  .cover .kicker{color:var(--muted);font-weight:500;font-size:clamp(13px,1.3vw,17px);letter-spacing:.02em;margin-bottom:14px}
+  .cover h1{font-size:clamp(44px,7.4vw,104px)}
+  .cover h1 .dot{color:var(--blue-bright)}
+  .cover .plat{
+    font-family:var(--display);font-weight:500;font-size:clamp(16px,1.9vw,26px);
+    color:var(--text);margin-top:6px;
+  }
+  .cover .plat b{color:var(--blue-bright);font-weight:600}
+  .cover .tag{color:var(--muted);font-size:clamp(15px,1.6vw,21px);line-height:1.5;max-width:36ch;margin-top:clamp(18px,2.2vw,30px)}
+  .flowline{display:flex;align-items:center;gap:10px;margin-top:clamp(26px,3vw,40px);flex-wrap:wrap}
+  .flowline .pill{
+    font-size:clamp(11px,1vw,13px);color:var(--muted);border:1px solid var(--border-strong);
+    padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.02);white-space:nowrap;
+  }
+  .flowline .arw{color:var(--blue-bright);opacity:.7;font-size:14px}
+
+  /* ---- grids ---- */
+  .cards{display:grid;gap:clamp(12px,1.4vw,20px);margin-top:clamp(22px,2.6vw,34px)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .card{
+    background:linear-gradient(180deg,var(--card),var(--card-2));
+    border:1px solid var(--border);border-radius:15px;
+    padding:clamp(15px,1.7vw,24px);
+  }
+  .card .ic{
+    width:clamp(34px,3.1vw,44px);height:clamp(34px,3.1vw,44px);border-radius:11px;
+    display:grid;place-items:center;background:var(--blue-soft);color:var(--blue-bright);
+    margin-bottom:clamp(11px,1.3vw,16px);
+  }
+  .card .ic.green{background:var(--green-soft);color:var(--green)}
+  .card .ic.orange{background:var(--orange-soft);color:var(--orange)}
+  .card .ic svg{width:52%;height:52%}
+  .card h3{font-family:var(--display);font-weight:600;font-size:clamp(15px,1.4vw,20px);letter-spacing:-.01em;margin-bottom:6px}
+  .card p{color:var(--muted);font-size:clamp(12px,1.05vw,15px);line-height:1.5}
+  .card .num{font-family:var(--display);font-weight:700;font-size:clamp(26px,3vw,40px);color:var(--blue-bright);line-height:1}
+
+  /* process steps */
+  .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(10px,1.2vw,16px);margin-top:clamp(24px,2.8vw,36px)}
+  .step{position:relative;background:linear-gradient(180deg,var(--card),var(--card-2));border:1px solid var(--border);border-radius:14px;padding:clamp(14px,1.5vw,20px)}
+  .step .n{font-family:var(--display);font-weight:700;font-size:clamp(13px,1.1vw,15px);color:var(--blue-bright);
+    width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:var(--blue-soft);margin-bottom:12px}
+  .step h4{font-family:var(--display);font-weight:600;font-size:clamp(13px,1.2vw,17px);margin-bottom:6px;letter-spacing:-.01em}
+  .step p{color:var(--muted);font-size:clamp(11px,.98vw,14px);line-height:1.45}
+  .step .link{position:absolute;top:50%;right:-9px;color:var(--blue-bright);opacity:.55;font-size:15px;z-index:2}
+  .steps .step:last-child .link{display:none}
+
+  /* chips */
+  .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:clamp(20px,2.4vw,30px);max-width:64ch}
+  .chip{font-size:clamp(12px,1.05vw,14px);color:var(--text);background:rgba(255,255,255,.03);
+    border:1px solid var(--border-strong);border-radius:999px;padding:9px 15px}
+  .chip b{color:var(--orange);font-weight:600}
+
+  /* bullet rows */
+  .rows{display:flex;flex-direction:column;gap:clamp(12px,1.5vw,20px);margin-top:clamp(20px,2.4vw,32px);max-width:70ch}
+  .row{display:flex;gap:15px;align-items:flex-start}
+  .row .rc{flex:none;width:clamp(34px,3vw,42px);height:clamp(34px,3vw,42px);border-radius:11px;background:var(--blue-soft);
+    color:var(--blue-bright);display:grid;place-items:center}
+  .row .rc svg{width:52%;height:52%}
+  .row h4{font-family:var(--display);font-weight:600;font-size:clamp(15px,1.35vw,19px);margin-bottom:3px;letter-spacing:-.01em}
+  .row p{color:var(--muted);font-size:clamp(12px,1.08vw,15px);line-height:1.5}
+
+  /* dashboard slide */
+  .dash{display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(12px,1.4vw,18px);margin-top:clamp(18px,2vw,26px)}
+  .statrow{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(9px,1vw,14px);grid-column:1 / -1;margin-bottom:2px}
+  .stat{background:linear-gradient(180deg,var(--card),var(--card-2));border:1px solid var(--border);border-radius:13px;padding:clamp(11px,1.2vw,16px)}
+  .stat .k{color:var(--muted);font-size:clamp(10px,.92vw,13px);margin-bottom:7px}
+  .stat .v{font-family:var(--display);font-weight:700;font-size:clamp(20px,2.1vw,30px)}
+  .panel{background:linear-gradient(180deg,var(--card),var(--card-2));border:1px solid var(--border);border-radius:15px;padding:clamp(14px,1.5vw,20px)}
+  .panel .pt{font-family:var(--display);font-weight:600;font-size:clamp(13px,1.15vw,16px);margin-bottom:clamp(12px,1.4vw,18px)}
+  .bars{display:flex;align-items:flex-end;gap:clamp(14px,2vw,30px);height:clamp(120px,15vw,180px);padding-left:6px}
+  .bar-wrap{display:flex;flex-direction:column;align-items:center;gap:9px;flex:1}
+  .bar{width:clamp(30px,3.4vw,52px);border-radius:6px 6px 3px 3px;background:linear-gradient(180deg,var(--blue-bright),var(--blue))}
+  .bar-wrap .lbl{color:var(--muted);font-size:clamp(9px,.85vw,12px)}
+  .donut-wrap{display:flex;align-items:center;gap:clamp(16px,2vw,28px)}
+  .legend{display:flex;flex-direction:column;gap:12px}
+  .legend .li{display:flex;align-items:center;gap:9px;font-size:clamp(11px,1vw,14px);color:var(--muted)}
+  .legend .li b{color:var(--text);font-weight:600;font-family:var(--display)}
+  .legend .dotc{width:11px;height:11px;border-radius:50%}
+  .summary{grid-column:1 / -1;background:var(--blue-soft);border:1px solid rgba(37,99,235,.28);border-radius:14px;
+    padding:clamp(13px,1.5vw,20px);display:flex;gap:14px;align-items:flex-start}
+  .summary .si{flex:none;width:34px;height:34px;border-radius:9px;background:var(--blue);color:#fff;display:grid;place-items:center}
+  .summary .si svg{width:52%;height:52%}
+  .summary p{color:#cfe0ff;font-size:clamp(12px,1.1vw,15px);line-height:1.55}
+  .summary p b{color:#fff;font-weight:600}
+
+  /* closing */
+  .closing{justify-content:center;text-align:left}
+  .closing h1{font-size:clamp(38px,6vw,86px);max-width:16ch;letter-spacing:-.035em}
+  .closing .dot{color:var(--blue-bright)}
+  .closing .sub{color:var(--muted);font-size:clamp(15px,1.6vw,21px);margin-top:clamp(18px,2vw,28px);line-height:1.5;max-width:44ch}
+  .closing .eco{margin-top:clamp(26px,3vw,40px);display:inline-flex;align-items:center;gap:12px;
+    border:1px solid var(--border-strong);border-radius:999px;padding:9px 18px 9px 9px;font-size:clamp(12px,1.05vw,15px);color:var(--muted)}
+  .closing .eco b{color:var(--text);font-weight:600}
+  .closing .ecologo{width:clamp(26px,2.4vw,32px);height:clamp(26px,2.4vw,32px);border-radius:8px;flex:none;
+    display:grid;place-items:center;background:linear-gradient(160deg,var(--blue-bright),var(--blue));
+    box-shadow:0 4px 14px rgba(37,99,235,.4)}
+  .closing .ecologo svg{width:58%;height:58%}
+
+  /* footer nav */
+  .foot{
+    position:absolute;left:0;right:0;bottom:0;z-index:6;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:clamp(12px,1.6vw,20px) clamp(20px,3vw,44px);
+  }
+  .dots{display:flex;gap:7px}
+  .dots button{width:7px;height:7px;border-radius:50%;border:0;padding:0;cursor:pointer;
+    background:rgba(255,255,255,.18);transition:all .25s}
+  .dots button.on{width:22px;border-radius:4px;background:var(--blue-bright)}
+  .nav{display:flex;align-items:center;gap:12px}
+  .counter{font-family:var(--display);font-size:clamp(11px,1vw,13px);color:var(--muted);letter-spacing:.05em}
+  .counter b{color:var(--text)}
+  .arws{display:flex;gap:8px}
+  .arws button{
+    width:clamp(32px,3vw,40px);height:clamp(32px,3vw,40px);border-radius:10px;cursor:pointer;
+    background:rgba(255,255,255,.04);border:1px solid var(--border-strong);color:var(--text);
+    display:grid;place-items:center;transition:all .2s}
+  .arws button:hover{background:var(--blue-soft);border-color:var(--blue);color:var(--blue-bright)}
+  .arws button:disabled{opacity:.3;cursor:not-allowed}
+  .arws svg{width:17px;height:17px}
+  .progress{position:absolute;top:0;left:0;height:2px;background:var(--blue-bright);transition:width .5s ease;z-index:7;
+    box-shadow:0 0 12px rgba(59,130,246,.6)}
+
+  @media (prefers-reduced-motion:reduce){
+    .slide{transition:opacity .2s}
+    .progress{transition:none}
+  }
+  @media (max-width:720px){
+    body{overflow:auto;padding:12px 0}
+    .deck{aspect-ratio:auto;height:auto;min-height:88vh;max-height:none}
+    .slide{position:relative;opacity:1;visibility:visible;transform:none;display:none;min-height:88vh}
+    .slide.active{display:flex}
+    .g3,.g4,.steps,.dash,.statrow{grid-template-columns:1fr 1fr}
+    .g2{grid-template-columns:1fr}
+    .step .link{display:none}
+  }
+
+  .back-home{ position:fixed; top:clamp(14px,2vw,24px); left:clamp(14px,2vw,24px); z-index:31;
+    display:flex; align-items:center; gap:.4rem; text-decoration:none;
+    font-family:var(--display); font-size:12.5px; font-weight:500; color:var(--muted);
+    border:1px solid var(--border-strong); background:rgba(19,26,38,.6); backdrop-filter:blur(8px);
+    padding:.5rem .85rem; border-radius:999px; transition:background .2s ease, color .2s ease; }
+  .back-home:hover{ background:rgba(255,255,255,.08); color:var(--text); }
+</style>
+</head>
+<body>
+<a class="back-home" href="../index.html">&larr; Voltar para o site</a>
+<div class="deck" id="deck">
+  <div class="progress" id="prog"></div>
+
+  <div class="top">
+    <div class="brand">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+          <path d="M3.27 6.96 12 12.01l8.73-5.05"/><path d="M12 22.08V12"/>
+        </svg>
+      </div>
+      <div class="brand-name">Inventário<span class="dot">.Log</span></div>
+    </div>
+    <div class="maker">
+      <div class="sd">SD</div>
+      <span>Soluções Digitais.Log</span>
+    </div>
+  </div>
+
+  <!-- 1 CAPA -->
+  <section class="slide cover active">
+    <div class="kicker">Plataforma Web · Visão geral</div>
+    <h1>Inventário<span class="dot">.Log</span></h1>
+    <div class="plat">A <b>central web</b> que fecha o seu inventário</div>
+    <p class="tag">Sua equipe conta o estoque; a plataforma junta tudo, aponta o que não bate e entrega o resultado pronto.</p>
+    <div class="flowline">
+      <span class="pill">Você organiza</span><span class="arw">&rarr;</span>
+      <span class="pill">A equipe conta</span><span class="arw">&rarr;</span>
+      <span class="pill">A plataforma cruza</span><span class="arw">&rarr;</span>
+      <span class="pill">Resultado na mão</span>
+    </div>
+  </section>
+
+  <!-- 2 PROBLEMA -->
+  <section class="slide">
+    <div class="eyebrow">Por que existe</div>
+    <h2>Contar estoque em equipe costuma virar bagunça</h2>
+    <div class="cards g3">
+      <div class="card">
+        <div class="ic orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+        <h3>Planilhas soltas</h3>
+        <p>Cada pessoa manda um arquivo diferente e alguém precisa juntar tudo na mão.</p>
+      </div>
+      <div class="card">
+        <div class="ic orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></div>
+        <h3>Contagem repetida</h3>
+        <p>O mesmo produto aparece duas vezes e o número final estoura sem ninguém perceber.</p>
+      </div>
+      <div class="card">
+        <div class="ic orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+        <h3>Números que não batem</h3>
+        <p>No fim do dia o resultado não fecha e não dá pra saber onde está o erro.</p>
+      </div>
+    </div>
+    <p class="txt" style="margin-top:26px;max-width:64ch">A plataforma nasceu pra tirar esse trabalho manual da frente e deixar o inventário confiável.</p>
+  </section>
+
+  <!-- 3 O QUE E -->
+  <section class="slide">
+    <div class="eyebrow">A ideia</div>
+    <h2>Uma central que junta tudo e organiza pra você</h2>
+    <p class="lead">Enquanto a equipe conta o estoque pelo celular, a plataforma web recebe cada contagem, cruza as informações, mostra onde há diferença e monta o inventário final. Você acompanha tudo de um lugar só, no computador.</p>
+    <div class="cards g3">
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
+        <h3>Junta a equipe toda</h3>
+        <p>Todo mundo conta ao mesmo tempo e a plataforma reúne as contagens automaticamente.</p>
+      </div>
+      <div class="card">
+        <div class="ic green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4 12 14.01l-3-3"/></svg></div>
+        <h3>Confere sozinha</h3>
+        <p>Aponta contagem repetida, código trocado e outras diferenças antes de você fechar.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
+        <h3>Entrega o resultado</h3>
+        <p>Painel com números, gráficos e relatórios prontos pra imprimir ou enviar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 PASSO A PASSO -->
+  <section class="slide">
+    <div class="eyebrow">Passo a passo</div>
+    <h2>Do primeiro cadastro ao inventário fechado</h2>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h4>Cadastre</h4><p>Registre a empresa e crie o inventário que vai contar.</p><span class="link">&rarr;</span></div>
+      <div class="step"><div class="n">2</div><h4>Convide a equipe</h4><p>Cada pessoa entra com o próprio acesso pra contar.</p><span class="link">&rarr;</span></div>
+      <div class="step"><div class="n">3</div><h4>Receba as contagens</h4><p>Sobe planilha ou chega direto do celular da equipe.</p><span class="link">&rarr;</span></div>
+      <div class="step"><div class="n">4</div><h4>Revise as diferenças</h4><p>A plataforma aponta o que não bate e você decide.</p><span class="link">&rarr;</span></div>
+      <div class="step"><div class="n">5</div><h4>Feche e exporte</h4><p>Consolida tudo e gera os relatórios finais.</p></div>
+    </div>
+  </section>
+
+  <!-- 5 EMPRESAS E INVENTARIOS -->
+  <section class="slide">
+    <div class="eyebrow">Organização</div>
+    <h2>Cada empresa e cada inventário no seu lugar</h2>
+    <div class="rows">
+      <div class="row">
+        <div class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg></div>
+        <div><h4>Várias empresas numa conta só</h4><p>Atenda mais de um comércio no mesmo lugar, com cada um separado e sem misturar dados.</p></div>
+      </div>
+      <div class="row">
+        <div class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+        <div><h4>Status claro do começo ao fim</h4><p>Cada inventário mostra em que pé está: planejado, em andamento, em análise ou concluído.</p></div>
+      </div>
+      <div class="row">
+        <div class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="m9.5 14 5-5"/></svg></div>
+        <div><h4>Apagou sem querer? Recupera</h4><p>Empresas e inventários excluídos vão pra uma lixeira e podem ser restaurados quando precisar.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 EQUIPE E ACESSOS -->
+  <section class="slide">
+    <div class="eyebrow">Pessoas e permissões</div>
+    <h2>Cada pessoa vê só o que precisa</h2>
+    <p class="lead" style="max-width:66ch">Você define o papel de cada um da equipe. Assim o estagiário não mexe onde não deve e o contador enxerga o que interessa pra ele.</p>
+    <div class="cards g4">
+      <div class="card"><h3>Administrador</h3><p>Controla tudo: empresas, equipe e configurações.</p></div>
+      <div class="card"><h3>Gestor</h3><p>Toca os inventários e organiza as empresas do dia a dia.</p></div>
+      <div class="card"><h3>Contador</h3><p>Acompanha resultados e puxa os relatórios que precisa.</p></div>
+      <div class="card"><h3>Consulta</h3><p>Só visualiza, sem risco de alterar nada por engano.</p></div>
+    </div>
+    <p class="txt" style="margin-top:22px;max-width:60ch">O celular da equipe entra na hora: é só ler um QR code pra conectar ao inventário certo.</p>
+  </section>
+
+  <!-- 7 UPLOAD E MAPEAMENTO -->
+  <section class="slide">
+    <div class="eyebrow">Entrada de dados</div>
+    <h2>As contagens entram do jeito que você já tem</h2>
+    <div class="rows">
+      <div class="row">
+        <div class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+        <div><h4>Planilha ou direto do celular</h4><p>Sobe um Excel ou CSV que a equipe já usa, ou recebe a contagem enviada na hora pelo app.</p></div>
+      </div>
+      <div class="row">
+        <div class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11-6 6v3h9l3-3"/><path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4l6 6Z"/></svg></div>
+        <div><h4>Reconhece as colunas sozinha</h4><p>A plataforma adivinha o que é código, quantidade e descrição, mesmo quando cada arquivo vem diferente.</p></div>
+      </div>
+      <div class="row">
+        <div class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-8a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v8"/><path d="M17 3v4a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V3"/></svg></div>
+        <div><h4>Guarda o formato pra próxima</h4><p>Depois de acertar uma vez, o próximo inventário já entra no lugar certo sem retrabalho.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 VALIDACAO -->
+  <section class="slide">
+    <div class="eyebrow">Qualidade</div>
+    <h2>Ela encontra os erros sozinha</h2>
+    <p class="lead" style="max-width:64ch">Antes de você fechar o inventário, a plataforma varre as contagens e separa tudo que parece errado, pra você resolver com calma. Você escolhe o que fazer em cada caso: somar, manter separado, excluir ou marcar pra revisar.</p>
+    <div class="chips">
+      <span class="chip"><b>8</b> tipos de diferença detectados:</span>
+      <span class="chip">Produto contado duas vezes</span>
+      <span class="chip">Código trocado</span>
+      <span class="chip">Item sem código</span>
+      <span class="chip">Quantidade zerada</span>
+      <span class="chip">Campo obrigatório vazio</span>
+      <span class="chip">Descrições diferentes</span>
+    </div>
+  </section>
+
+  <!-- 9 DASHBOARD -->
+  <section class="slide">
+    <div class="eyebrow">Resultado na tela</div>
+    <h2>O panorama do inventário numa tela só</h2>
+    <div class="dash">
+      <div class="statrow">
+        <div class="stat"><div class="k">Produtos distintos</div><div class="v">10</div></div>
+        <div class="stat"><div class="k">Quantidade contada</div><div class="v">115</div></div>
+        <div class="stat"><div class="k">Com diferença</div><div class="v" style="color:var(--orange)">9</div></div>
+        <div class="stat"><div class="k">Participantes</div><div class="v" style="color:var(--blue-bright)">3</div></div>
+      </div>
+      <div class="panel">
+        <div class="pt">Quantidade contada por pessoa</div>
+        <div class="bars">
+          <div class="bar-wrap"><div class="bar" style="height:100%"></div><span class="lbl">Maria</span></div>
+          <div class="bar-wrap"><div class="bar" style="height:26%"></div><span class="lbl">João</span></div>
+          <div class="bar-wrap"><div class="bar" style="height:16%"></div><span class="lbl">Carlos</span></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="pt">Situação geral das conferências</div>
+        <div class="donut-wrap">
+          <svg width="130" height="130" viewBox="0 0 42 42">
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#131A26" stroke-width="6"/>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--blue-bright)" stroke-width="6"
+              stroke-dasharray="52 48" stroke-dashoffset="25" stroke-linecap="round"/>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--orange)" stroke-width="6"
+              stroke-dasharray="48 52" stroke-dashoffset="73" stroke-linecap="round"/>
+          </svg>
+          <div class="legend">
+            <div class="li"><span class="dotc" style="background:var(--blue-bright)"></span>Em revisão <b>11</b></div>
+            <div class="li"><span class="dotc" style="background:var(--orange)"></span>Já validado <b>10</b></div>
+          </div>
+        </div>
+      </div>
+      <div class="summary">
+        <div class="si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15h6M9 11h2"/></svg></div>
+        <p>E um <b>resumo escrito automático</b>: “O inventário recebeu 3 arquivos de contagem, 115 unidades e 10 produtos. Há 9 diferenças pendentes de revisão. Recomenda-se revisar os itens contados duas vezes antes de concluir.”</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 RELATORIOS -->
+  <section class="slide">
+    <div class="eyebrow">Exportação</div>
+    <h2>Relatórios prontos pra enviar</h2>
+    <p class="lead" style="max-width:60ch">Com o inventário fechado, é um clique pra tirar o material que você precisa: pro contador, pro dono ou pro seu arquivo.</p>
+    <div class="cards g2">
+      <div class="card">
+        <div class="ic green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="m9 13 2 2 4-4"/></svg></div>
+        <h3>Excel</h3>
+        <p>Base final consolidada, lista de diferenças, pendências e resultado por pessoa que contou.</p>
+      </div>
+      <div class="card">
+        <div class="ic orange"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M10 12h4M8 16h8"/></svg></div>
+        <h3>PDF</h3>
+        <p>Relatório final e o painel completo em um documento limpo, fácil de imprimir ou anexar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 AUDITORIA + LIXEIRA -->
+  <section class="slide">
+    <div class="eyebrow">Rastreabilidade</div>
+    <h2>Tudo registrado, nada se perde</h2>
+    <div class="rows">
+      <div class="row">
+        <div class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="9"/></svg></div>
+        <div><h4>Quem mexeu, quando e no quê</h4><p>Cada alteração fica registrada, com quem fez e a hora, pra qualquer dúvida ficar fácil de conferir.</p></div>
+      </div>
+      <div class="row">
+        <div class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3 8 4-16 3 8h4"/></svg></div>
+        <div><h4>Veja o antes e o depois</h4><p>Dá pra ver como estava e como ficou, sem depender da memória de ninguém.</p></div>
+      </div>
+      <div class="row">
+        <div class="rc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="m9.5 14 5-5"/></svg></div>
+        <div><h4>Lixeira com restauração</h4><p>Empresas e inventários apagados podem voltar. Nada some de vez por acidente.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 INTEGRACAO -->
+  <section class="slide">
+    <div class="eyebrow">Conectado</div>
+    <h2>Conversa direto com o app no celular</h2>
+    <p class="lead" style="max-width:64ch">A plataforma web e o aplicativo Inventário.Log trabalham juntos. Um faz a contagem no chão da loja, o outro organiza e fecha no escritório.</p>
+    <div class="cards g3">
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="4" width="10" height="16" rx="2"/><path d="M11 5h2"/></svg></div>
+        <h3>Libera quem vai contar</h3>
+        <p>Cada participante entra com um código; só quem foi convidado consegue enviar contagem.</p>
+      </div>
+      <div class="card">
+        <div class="ic green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.22-8.56"/><polyline points="21 4 21 10 15 10"/></svg></div>
+        <h3>Recebe sem duplicar</h3>
+        <p>Mesmo com internet ruim e reenvio, a contagem não entra duas vezes.</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg></div>
+        <h3>Mantém tudo sincronizado</h3>
+        <p>As empresas e inventários ativos aparecem no celular prontos pra usar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 FECHO -->
+  <section class="slide closing">
+    <div class="eyebrow">Inventário.Log</div>
+    <h1>Da contagem à decisão, num lugar só<span class="dot">.</span></h1>
+    <p class="sub">Menos trabalho manual, um inventário em que dá pra confiar.</p>
+    <div class="eco">
+      <span class="ecologo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+          <path d="M3.27 6.96 12 12.01l8.73-5.05"/><path d="M12 22.08V12"/>
+        </svg>
+      </span>
+      <span>Parte do ecossistema <b>.Log</b>, por <b>Soluções Digitais.Log</b></span>
+    </div>
+  </section>
+
+  <div class="foot">
+    <div class="dots" id="dots"></div>
+    <div class="nav">
+      <div class="counter"><b id="cur">01</b> / <span id="total">13</span></div>
+      <div class="arws">
+        <button id="prev" aria-label="Anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <button id="next" aria-label="Próximo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const slides=[...document.querySelectorAll('.slide')];
+  const dotsWrap=document.getElementById('dots');
+  const prog=document.getElementById('prog');
+  const curEl=document.getElementById('cur');
+  const prevBtn=document.getElementById('prev');
+  const nextBtn=document.getElementById('next');
+  document.getElementById('total').textContent=String(slides.length).padStart(2,'0');
+  let i=0;
+
+  slides.forEach((_,n)=>{
+    const b=document.createElement('button');
+    b.addEventListener('click',()=>go(n));
+    dotsWrap.appendChild(b);
+  });
+  const dots=[...dotsWrap.children];
+
+  function go(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    dots.forEach((d,k)=>d.classList.toggle('on',k===i));
+    prog.style.width=((i+1)/slides.length*100)+'%';
+    curEl.textContent=String(i+1).padStart(2,'0');
+    prevBtn.disabled=i===0;
+    nextBtn.disabled=i===slides.length-1;
+  }
+  prevBtn.addEventListener('click',()=>go(i-1));
+  nextBtn.addEventListener('click',()=>go(i+1));
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();go(i+1)}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(i-1)}
+    if(e.key==='Home')go(0);
+    if(e.key==='End')go(slides.length-1);
+  });
+  let sx=null;
+  document.getElementById('deck').addEventListener('touchstart',e=>sx=e.touches[0].clientX,{passive:true});
+  document.getElementById('deck').addEventListener('touchend',e=>{
+    if(sx===null)return;const dx=e.changedTouches[0].clientX-sx;
+    if(Math.abs(dx)>50)go(i+(dx<0?1:-1));sx=null;
+  },{passive:true});
+  go(0);
+</script>
+</body>
+</html>
