@@ -142,8 +142,9 @@ section{ padding:clamp(3.5rem,8vw,6rem) 0; }
 }
 .contact-box h2{ font-family:var(--display); font-size:clamp(1.4rem,3vw,1.9rem); max-width:22ch; }
 .contact-box p{ color:var(--muted); margin-top:.6rem; max-width:42ch; }
-.contact-links{ display:flex; flex-direction:column; gap:.6rem; font-size:.95rem; }
+.contact-links{ display:flex; flex-direction:column; align-items:flex-start; gap:.6rem; font-size:.95rem; }
 .contact-links a{ text-decoration:none; color:var(--blue); font-weight:600; }
+.contact-links a.btn{ color:#fff; margin-top:.4rem; }
 
 /* FOOTER */
 footer{ background:var(--navy); color:var(--on-navy-muted); padding:2.5rem 0; font-size:.85rem; }
